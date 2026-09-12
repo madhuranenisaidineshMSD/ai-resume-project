@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h2>Welcome Back</h2>
+
+        <p class="sub-text">
+            Login to access your account
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter Your Email"
+                required
+            />
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter Your Password"
+                required
+            />
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+       
+
+        <p class="switch-auth">
+            Don't have an account?
+            <a href="/signup">Sign Up</a>
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+
+        if (event.persisted) {
+            window.location.reload();
+        }
+
+    });
+</script>
+
+{% endblock %}

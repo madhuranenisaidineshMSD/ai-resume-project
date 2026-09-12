@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h2>Create Account</h2>
+
+        <p class="sub-text">
+            Start your AI Career Journey
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter Your Email"
+                required
+            />
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter Your Password"
+                required
+            />
+
+            <p class="sub-text">
+                Use at least 6 characters password
+            </p>
+
+            <button type="submit">
+                Sign Up
+            </button>
+
+        </form>
+
+        <p class="switch-auth">
+            Already have an account?
+            <a href="/login">Login</a>
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+
+        if (event.persisted) {
+            window.location.reload();
+        }
+
+    });
+</script>
+
+{% endblock %}

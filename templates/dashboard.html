@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Welcome, {{ user }}</h2>
+
+<div class="card">
+
+    <h3>Resume Analyser</h3>
+
+    <form method="POST" enctype="multipart/form-data" id="analyzeForm">
+
+        <textarea name="resume" placeholder="Paste your resume (Optional)"></textarea>
+
+        <p>Or Upload file PDF or Word</p>
+
+        <input type="file" name="file"  />
+
+        <input name="role" placeholder="What do you want to become? (e.g.) Python Full Stack" />
+
+        <button type="submit" id="analyzeButton">
+            Analyze
+        </button>
+
+    </form>
+
+    <p id="loadingMessage" style="display:none;">
+        Analysis started. Please wait...
+    </p>
+
+    <p id="timerMessage" style="display:none;">
+        Time remaining: <span id="countdown">60</span> seconds
+    </p>
+
+</div>
+
+
+{% if result %}
+
+<div class="red">
+
+    {% if result.error %}
+
+        <p style="color:red">
+            Error: {{ result.error }}
+        </p>
+
+    {% endif %}
+
+
+    <h3>Skills</h3>
+
+    <ul>
+
+        {% for s in result.get("skills", []) %}
+
+            <li>{{ s }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+
+    <h3>Missing Skills</h3>
+
+    <ul>
+
+        {% for s in result.get("missing_skills", []) %}
+
+            <li>{{ s }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+
+    <h3>Roadmap</h3>
+
+    <ul>
+
+        {% for s in result.get("roadmap", []) %}
+
+            <li>{{ s }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+
+    <h3>Interview Questions</h3>
+
+    <ul>
+
+        {% for s in result.get("interview_questions", []) %}
+
+            <li>{{ s }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+<script>
+
+    const form = document.getElementById("analyzeForm");
+
+    const button = document.getElementById("analyzeButton");
+
+    const loadingMessage = document.getElementById("loadingMessage");
+
+    const timerMessage = document.getElementById("timerMessage");
+
+    const countdown = document.getElementById("countdown");
+
+
+    form.addEventListener("submit", function () {
+
+        button.disabled = true;
+
+        button.innerText = "Analyzing...";
+
+        loadingMessage.style.display = "block";
+
+        timerMessage.style.display = "block";
+
+
+        let timeLeft = 60;
+
+        countdown.innerText = timeLeft;
+
+
+        const timer = setInterval(function () {
+
+            timeLeft--;
+
+            countdown.innerText = timeLeft;
+
+
+            if (timeLeft <= 0) {
+
+                clearInterval(timer);
+
+                loadingMessage.innerText =
+                    "Please wait, analysis is taking a little longer...";
+
+                timerMessage.innerText =
+                    "Please wait for the AI response.";
+
+            }
+
+        }, 1000);
+
+    });
+
+</script>
+
+{% endblock %}
